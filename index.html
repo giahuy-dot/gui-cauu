@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gửi Cậu...</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fce4ec; /* Màu nền hồng nhạt */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; /* Ngăn thanh cuộn khi nút chạy ra ngoài */
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+
+        h1 {
+            color: #e91e63;
+            margin-bottom: 20px;
+        }
+
+        p.letter {
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .btn-group {
+            position: relative;
+            height: 60px; /* Tạo không gian cho các nút */
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        button {
+            padding: 10px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-weight: bold;
+        }
+
+        #yesBtn {
+            background-color: #e91e63;
+            color: white;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.1);
+            background-color: #d81b60;
+        }
+
+        #noBtn {
+            background-color: #e0e0e0;
+            color: #333;
+            position: absolute; /* Để có thể di chuyển tự do */
+            left: 55%; /* Vị trí ban đầu bên cạnh nút Yes */
+        }
+
+        /* Hiệu ứng tim bay (trang trí thêm) */
+        .heart {
+            position: absolute;
+            color: #e91e63;
+            animation: fly 2s ease-out forwards;
+            font-size: 20px;
+        }
+
+        @keyframes fly {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Gửi Cậu, người tui thương! ❤️</h1>
+        
+        <p class="letter">
+            "Anh đã thích Cô Giáo của anh. Mai Anh làm người yêu tớ nhé?"
+        </p>
+
+        <div class="btn-group">
+            <button id="yesBtn">Đồng ý</button>
+            <button id="noBtn">Không</button>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+
+        // Logic cho nút "Không"
+        noBtn.addEventListener('mouseover', () => {
+            // Lấy kích thước cửa sổ
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+
+            // Tính toán vị trí ngẫu nhiên
+            // Giới hạn trong khoảng an toàn để nút không bị mất hẳn
+            const randomX = Math.floor(Math.random() * (windowWidth - 150)); 
+            const randomY = Math.floor(Math.random() * (windowHeight - 100));
+
+            // Gán vị trí mới (sử dụng fixed để thoát khỏi flow của container)
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        });
+
+        // Logic cho nút "Đồng ý"
+        yesBtn.addEventListener('click', () => {
+            // Tạo hiệu ứng tim bay
+            createHearts();
+            
+            // Thông báo
+            alert("Tớ biết cậu sẽ đồng ý mà! Yêu cậu nhiều! ❤️");
+            
+            // Hoặc chuyển hướng đến trang khác (ví dụ: Facebook của bạn)
+            // window.location.href = "LINK_FACEBOOK_CUA_BAN"; 
+        });
+
+        function createHearts() {
+            const container = document.querySelector('.container');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                container.appendChild(heart);
+                
+                // Xóa tim sau khi bay xong để nhẹ web
+                setTimeout(() => {
+                    heart.remove();
+                }, 2000);
+            }
+        }
+    </script>
+</body>
+</html>
